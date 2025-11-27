@@ -16,13 +16,6 @@ from config import (
 def preprocess_image(image):
     """
     Preprocesa la imagen para mejorar la detección.
-    
-    Parámetros:
-    - image: Imagen BGR de entrada
-    
-    Retorna:
-    - Imagen preprocesada en escala de grises
-    - Imagen en espacio HSV
     """
     # Aplicar desenfoque gaussiano para reducir ruido
     # Kernel 5x5: tamaño moderado que suaviza sin perder detalles importantes
@@ -36,13 +29,7 @@ def preprocess_image(image):
 
 def segment_green_background(hsv_image):
     """
-    Segmenta el fondo verde del tapete.
-    
-    Parámetros:
-    - hsv_image: Imagen en espacio de color HSV
-    
-    Retorna:
-    - Máscara binaria donde el fondo verde es negro (0) y las cartas son blancas (255)
+    Segmenta el fondo verde del tapete.    
     """
     # Crear máscara para el color verde
     green_mask = cv2.inRange(hsv_image, GREEN_HSV_LOWER, GREEN_HSV_UPPER)
@@ -66,12 +53,6 @@ def segment_green_background(hsv_image):
 def find_card_contours(mask):
     """
     Encuentra contornos que podrían ser cartas.
-    
-    Parámetros:
-    - mask: Máscara binaria de la segmentación
-    
-    Retorna:
-    - Lista de contornos que cumplen los criterios de tamaño
     """
     # Encontrar contornos externos
     # RETR_EXTERNAL: solo contornos externos (ignora agujeros)
@@ -96,12 +77,6 @@ def order_points(pts):
     """
     Ordena los 4 puntos de las esquinas de una carta en orden consistente:
     [top-left, top-right, bottom-right, bottom-left]
-    
-    Parámetros:
-    - pts: Array de 4 puntos
-    
-    Retorna:
-    - Array de 4 puntos ordenados
     """
     rect = np.zeros((4, 2), dtype="float32")
     
@@ -121,12 +96,6 @@ def order_points(pts):
 def get_card_corners(contour):
     """
     Obtiene las 4 esquinas de una carta a partir de su contorno.
-    
-    Parámetros:
-    - contour: Contorno de la carta
-    
-    Retorna:
-    - Array de 4 esquinas ordenadas, o None si no es una carta válida
     """
     # Calcular el perímetro del contorno
     perimeter = cv2.arcLength(contour, True)
@@ -199,14 +168,7 @@ def get_card_corners(contour):
 
 def perspective_transform(image, corners):
     """
-    Aplica transformación de perspectiva para obtener una vista frontal de la carta.
-    
-    Parámetros:
-    - image: Imagen original
-    - corners: 4 esquinas de la carta ordenadas
-    
-    Retorna:
-    - Imagen de la carta normalizada (vista frontal)
+    Aplica transformación de perspectiva para obtener una vista frontal de la carta.    
     """
     # Puntos de destino (carta normalizada)
     dst_points = np.array([
@@ -231,12 +193,6 @@ def ensure_correct_orientation(card_image):
     """
     Asegura que la carta esté en la orientación correcta (valor en esquina superior izquierda).
     Usa análisis de gradientes para detectar la orientación del texto.
-    
-    Parámetros:
-    - card_image: Imagen de la carta normalizada
-    
-    Retorna:
-    - Imagen de la carta con orientación correcta
     """
     # Convertir a escala de grises
     gray = cv2.cvtColor(card_image, cv2.COLOR_BGR2GRAY)
@@ -301,19 +257,6 @@ def ensure_correct_orientation(card_image):
 def detect_cards(image, debug=False):
     """
     Función principal de detección de cartas.
-    
-    Parámetros:
-    - image: Imagen BGR de entrada
-    - debug: Si es True, retorna imágenes intermedias para depuración
-    
-    Retorna:
-    - Lista de diccionarios con información de cada carta detectada:
-        {
-            'contour': contorno original,
-            'corners': esquinas de la carta,
-            'card_image': imagen normalizada de la carta
-        }
-    - Si debug=True, también retorna diccionario con imágenes intermedias
     """
     # Preprocesar imagen
     blurred, hsv = preprocess_image(image)
@@ -357,14 +300,6 @@ def detect_cards(image, debug=False):
 def draw_card_detection(image, cards, recognized_cards=None):
     """
     Dibuja la detección de cartas sobre la imagen.
-    
-    Parámetros:
-    - image: Imagen original
-    - cards: Lista de cartas detectadas
-    - recognized_cards: Lista opcional de resultados de reconocimiento
-    
-    Retorna:
-    - Imagen con las detecciones dibujadas
     """
     output = image.copy()
     

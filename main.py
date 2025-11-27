@@ -1,21 +1,4 @@
 """
-Sistema de Reconocimiento de Cartas de Póker
-============================================
-Proyecto de Visión Artificial - Examen Parcial
-
-Este sistema utiliza técnicas clásicas de procesamiento de imágenes
-para reconocer cartas de una baraja estándar de póker.
-
-Hardware utilizado:
-- Cámara: Android conectado mediante Camo
-- Tapete verde como fondo uniforme
-
-Técnicas utilizadas:
-- Segmentación por color HSV
-- Detección de contornos
-- Transformación de perspectiva
-- Template matching
-
 Controles:
 - ESC o 'q': Salir
 - 's': Capturar imagen actual
@@ -55,9 +38,6 @@ class CardRecognitionSystem:
     def initialize(self):
         """
         Inicializa la cámara y el reconocedor.
-        
-        Retorna:
-        - True si la inicialización fue exitosa
         """
         print("=" * 60)
         print("   SISTEMA DE RECONOCIMIENTO DE CARTAS DE PÓKER")

@@ -1,9 +1,3 @@
-"""
-Reconocedor de cartas v3 - Método de diferencia absoluta.
-Basado en la metodología de comparación por diferencia de píxeles.
-Más simple y efectivo que template matching.
-"""
-
 import cv2
 import numpy as np
 import os
