@@ -1,0 +1,6 @@
+# Proyecto Vision Artificial - Reconocimiento de Cartas
+# Python 3.8+ recomendado
+
+opencv-python>=4.8.0
+numpy>=1.26.0
+
